@@ -1,0 +1,76 @@
+<div class="clientes-container">
+  <div class="page-header">
+    <h1>👥 Gestión de Clientes</h1>
+    <a routerLink="/clientes/nuevo" class="btn-primary">+ Nuevo Cliente</a>
+  </div>
+
+  <div class="search-bar">
+    <input 
+      type="text" 
+      placeholder="🔍 Buscar por nombre, email o teléfono..." 
+      (input)="buscarClientes($event)"
+      class="search-input"
+    >
+  </div>
+
+  <div class="clientes-grid">
+    <div *ngFor="let cliente of clientesFiltrados" class="cliente-card">
+      <div class="cliente-header">
+        <div class="cliente-avatar">
+          {{ cliente.nombre.charAt(0) }}{{ cliente.apellidos.charAt(0) }}
+        </div>
+        <div class="cliente-info-header">
+          <h3>{{ cliente.nombre }} {{ cliente.apellidos }}</h3>
+          <span *ngIf="cliente.vip" class="badge-vip">⭐ VIP</span>
+        </div>
+      </div>
+
+      <div class="cliente-details">
+        <div class="detail-row">
+          <span class="detail-icon">📧</span>
+          <span>{{ cliente.email }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-icon">📱</span>
+          <span>{{ cliente.telefono }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-icon">📅</span>
+          <span>Registro: {{ cliente.fechaRegistro | date:'dd/MM/yyyy' }}</span>
+        </div>
+      </div>
+
+      <div class="cliente-stats">
+        <div class="stat-item">
+          <strong>{{ cliente.visitasTotales }}</strong>
+          <span>Visitas</span>
+        </div>
+        <div class="stat-item">
+          <strong>{{ cliente.gastoTotal | number:'1.2-2' }}€</strong>
+          <span>Gasto Total</span>
+        </div>
+      </div>
+
+      <div *ngIf="cliente.preferencias" class="cliente-preferences">
+        <strong>🍽️ Preferencias:</strong> {{ cliente.preferencias }}
+      </div>
+
+      <div *ngIf="cliente.notas" class="cliente-notes">
+        <strong>📝 Notas:</strong> {{ cliente.notas }}
+      </div>
+
+      <div class="cliente-actions">
+        <a [routerLink]="['/clientes', cliente.id]" class="btn-action btn-view">Ver</a>
+        <a [routerLink]="['/clientes', cliente.id, 'editar']" class="btn-action btn-edit">Editar</a>
+        <button (click)="eliminarCliente(cliente.id)" class="btn-action btn-delete">Eliminar</button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="clientesFiltrados.length === 0" class="empty-state">
+    <div class="empty-icon">🔍</div>
+    <h3>No se encontraron clientes</h3>
+    <p>Intenta con otros términos de búsqueda o añade un nuevo cliente</p>
+    <a routerLink="/clientes/nuevo" class="btn-primary">+ Añadir Cliente</a>
+  </div>
+</div>

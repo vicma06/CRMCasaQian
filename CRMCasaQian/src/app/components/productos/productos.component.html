@@ -1,0 +1,57 @@
+<div class="productos-container">
+  <div class="page-header">
+    <h1>🥘 Menú de Productos</h1>
+  </div>
+
+  <div class="categorias">
+    <button 
+      *ngFor="let categoria of categorias"
+      [class.active]="categoriaSeleccionada === categoria" 
+      (click)="categoriaSeleccionada = categoria; cargarProductos()"
+      class="categoria-btn"
+    >
+      {{ categoria | titlecase }}
+    </button>
+  </div>
+
+  <div class="productos-grid">
+    <div *ngFor="let producto of productos" class="producto-card">
+      <div class="producto-header">
+        <h3>{{ producto.nombre }}</h3>
+        <span class="producto-categoria">{{ producto.categoria }}</span>
+      </div>
+
+      <div class="producto-body">
+        <div *ngIf="producto.descripcion" class="producto-descripcion">
+          {{ producto.descripcion }}
+        </div>
+
+        <div class="producto-info">
+          <div class="producto-precio">
+            {{ producto.precio | number:'1.2-2' }}€
+          </div>
+          <div class="producto-badges">
+            <span *ngIf="producto.picante" class="badge-picante">🌶️ Picante</span>
+            <span [class]="producto.disponible ? 'badge-disponible' : 'badge-no-disponible'">
+              {{ producto.disponible ? '✓ Disponible' : '✗ No disponible' }}
+            </span>
+          </div>
+        </div>
+
+        <button 
+          (click)="cambiarDisponibilidad(producto.id)" 
+          class="btn-toggle"
+          [class.disponible]="producto.disponible"
+        >
+          {{ producto.disponible ? 'Marcar No Disponible' : 'Marcar Disponible' }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="productos.length === 0" class="empty-state">
+    <div class="empty-icon">🍽️</div>
+    <h3>No hay productos</h3>
+    <p>No se encontraron productos en esta categoría</p>
+  </div>
+</div>

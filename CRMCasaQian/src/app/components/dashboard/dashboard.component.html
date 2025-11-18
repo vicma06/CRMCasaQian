@@ -1,0 +1,110 @@
+<div class="dashboard">
+  <div class="header">
+    <h1>🍲 Casa Qian - Hotpot Restaurant</h1>
+    <p class="subtitle">Panel de Control CRM</p>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card clientes">
+      <div class="stat-icon">👥</div>
+      <div class="stat-info">
+        <h3>{{ totalClientes }}</h3>
+        <p>Total Clientes</p>
+      </div>
+    </div>
+
+    <div class="stat-card vip">
+      <div class="stat-icon">⭐</div>
+      <div class="stat-info">
+        <h3>{{ clientesVIP }}</h3>
+        <p>Clientes VIP</p>
+      </div>
+    </div>
+
+    <div class="stat-card reservas">
+      <div class="stat-icon">📅</div>
+      <div class="stat-info">
+        <h3>{{ reservasHoy }}</h3>
+        <p>Reservas Hoy</p>
+      </div>
+    </div>
+
+    <div class="stat-card pedidos">
+      <div class="stat-icon">🍜</div>
+      <div class="stat-info">
+        <h3>{{ pedidosHoy }}</h3>
+        <p>Pedidos Hoy</p>
+      </div>
+    </div>
+
+    <div class="stat-card ventas">
+      <div class="stat-icon">💰</div>
+      <div class="stat-info">
+        <h3>{{ ventasHoy | number:'1.2-2' }}€</h3>
+        <p>Ventas Hoy</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-grid">
+    <div class="section">
+      <div class="section-header">
+        <h2>📋 Reservas de Hoy</h2>
+        <a routerLink="/reservas" class="link-btn">Ver todas</a>
+      </div>
+      <div class="list">
+        <div *ngFor="let reserva of ultimasReservas" class="list-item">
+          <div class="item-info">
+            <strong>{{ reserva.nombreCliente }}</strong>
+            <span class="item-detail">{{ reserva.hora }} - {{ reserva.numeroPersonas }} personas</span>
+          </div>
+          <span [class]="'badge badge-' + reserva.estado">{{ reserva.estado }}</span>
+        </div>
+        <div *ngIf="ultimasReservas.length === 0" class="empty-state">
+          No hay reservas para hoy
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header">
+        <h2>🍽️ Pedidos Recientes</h2>
+        <a routerLink="/pedidos" class="link-btn">Ver todos</a>
+      </div>
+      <div class="list">
+        <div *ngFor="let pedido of ultimosPedidos" class="list-item">
+          <div class="item-info">
+            <strong>{{ pedido.nombreCliente }}</strong>
+            <span class="item-detail">Mesa {{ pedido.mesaId }} - {{ pedido.total | number:'1.2-2' }}€</span>
+          </div>
+          <span [class]="'badge badge-' + pedido.estado">{{ pedido.estado }}</span>
+        </div>
+        <div *ngIf="ultimosPedidos.length === 0" class="empty-state">
+          No hay pedidos hoy
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="quick-actions">
+    <h2>⚡ Acciones Rápidas</h2>
+    <div class="action-buttons">
+      <a routerLink="/clientes/nuevo" class="action-btn">
+        <span class="action-icon">👤</span>
+        <span>Nuevo Cliente</span>
+      </a>
+      <a routerLink="/reservas/nueva" class="action-btn">
+        <span class="action-icon">📅</span>
+        <span>Nueva Reserva</span>
+      </a>
+      <a routerLink="/pedidos/nuevo" class="action-btn">
+        <span class="action-icon">🍜</span>
+        <span>Nuevo Pedido</span>
+      </a>
+      <a routerLink="/productos" class="action-btn">
+        <span class="action-icon">🥘</span>
+        <span>Gestionar Menú</span>
+      </a>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,102 @@
+<div class="reservas-container">
+  <div class="page-header">
+    <h1>📅 Gestión de Reservas</h1>
+    <a routerLink="/reservas/nueva" class="btn-primary">+ Nueva Reserva</a>
+  </div>
+
+  <div class="filtros">
+    <button 
+      [class.active]="filtroEstado === 'todas'" 
+      (click)="filtroEstado = 'todas'; aplicarFiltro()"
+      class="filtro-btn"
+    >
+      Todas
+    </button>
+    <button 
+      [class.active]="filtroEstado === 'pendiente'" 
+      (click)="filtroEstado = 'pendiente'; aplicarFiltro()"
+      class="filtro-btn"
+    >
+      Pendientes
+    </button>
+    <button 
+      [class.active]="filtroEstado === 'confirmada'" 
+      (click)="filtroEstado = 'confirmada'; aplicarFiltro()"
+      class="filtro-btn"
+    >
+      Confirmadas
+    </button>
+    <button 
+      [class.active]="filtroEstado === 'completada'" 
+      (click)="filtroEstado = 'completada'; aplicarFiltro()"
+      class="filtro-btn"
+    >
+      Completadas
+    </button>
+    <button 
+      [class.active]="filtroEstado === 'cancelada'" 
+      (click)="filtroEstado = 'cancelada'; aplicarFiltro()"
+      class="filtro-btn"
+    >
+      Canceladas
+    </button>
+  </div>
+
+  <div class="reservas-list">
+    <div *ngFor="let reserva of reservas" class="reserva-card">
+      <div class="reserva-main">
+        <div class="reserva-info">
+          <div class="reserva-header-info">
+            <h3>{{ reserva.nombreCliente }}</h3>
+            <span [class]="'badge badge-' + reserva.estado">{{ reserva.estado }}</span>
+          </div>
+          
+          <div class="reserva-details">
+            <div class="detail-item">
+              <span class="detail-icon">📅</span>
+              <span>{{ reserva.fecha | date:'dd/MM/yyyy' }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-icon">🕐</span>
+              <span>{{ reserva.hora }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-icon">👥</span>
+              <span>{{ reserva.numeroPersonas }} personas</span>
+            </div>
+            <div *ngIf="reserva.mesaId" class="detail-item">
+              <span class="detail-icon">🪑</span>
+              <span>Mesa {{ reserva.mesaId }}</span>
+            </div>
+          </div>
+
+          <div *ngIf="reserva.notas" class="reserva-notas">
+            <strong>📝 Notas:</strong> {{ reserva.notas }}
+          </div>
+        </div>
+
+        <div class="reserva-actions">
+          <select 
+            [value]="reserva.estado" 
+            (change)="cambiarEstado(reserva.id, $any($event.target).value)"
+            class="estado-select"
+          >
+            <option value="pendiente">Pendiente</option>
+            <option value="confirmada">Confirmada</option>
+            <option value="completada">Completada</option>
+            <option value="cancelada">Cancelada</option>
+          </select>
+          <button (click)="eliminarReserva(reserva.id)" class="btn-delete">
+            🗑️
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="reservas.length === 0" class="empty-state">
+    <div class="empty-icon">📅</div>
+    <h3>No hay reservas</h3>
+    <p>No se encontraron reservas con el filtro seleccionado</p>
+  </div>
+</div>

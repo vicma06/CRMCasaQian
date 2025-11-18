@@ -1,0 +1,112 @@
+<div class="form-container">
+  <div class="form-header">
+    <h1>👤 Nuevo Cliente</h1>
+  </div>
+
+  <form (ngSubmit)="guardarCliente()" class="cliente-form">
+    <div class="form-section">
+      <h2>Información Personal</h2>
+      
+      <div class="form-row">
+        <div class="form-group">
+          <label for="nombre">Nombre *</label>
+          <input 
+            type="text" 
+            id="nombre" 
+            [(ngModel)]="cliente.nombre" 
+            name="nombre"
+            required
+            class="form-input"
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="apellidos">Apellidos *</label>
+          <input 
+            type="text" 
+            id="apellidos" 
+            [(ngModel)]="cliente.apellidos" 
+            name="apellidos"
+            required
+            class="form-input"
+          >
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="email">Email *</label>
+          <input 
+            type="email" 
+            id="email" 
+            [(ngModel)]="cliente.email" 
+            name="email"
+            required
+            class="form-input"
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="telefono">Teléfono *</label>
+          <input 
+            type="tel" 
+            id="telefono" 
+            [(ngModel)]="cliente.telefono" 
+            name="telefono"
+            required
+            class="form-input"
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h2>Preferencias y Notas</h2>
+      
+      <div class="form-group">
+        <label for="preferencias">🍽️ Preferencias Alimentarias</label>
+        <input 
+          type="text" 
+          id="preferencias" 
+          [(ngModel)]="cliente.preferencias" 
+          name="preferencias"
+          placeholder="Ej: Picante, sin cerdo, vegetariano..."
+          class="form-input"
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="notas">📝 Notas Adicionales</label>
+        <textarea 
+          id="notas" 
+          [(ngModel)]="cliente.notas" 
+          name="notas"
+          rows="4"
+          placeholder="Información relevante sobre el cliente..."
+          class="form-textarea"
+        ></textarea>
+      </div>
+
+      <div class="form-group checkbox-group">
+        <label class="checkbox-label">
+          <input 
+            type="checkbox" 
+            [(ngModel)]="cliente.vip" 
+            name="vip"
+            class="form-checkbox"
+          >
+          <span>⭐ Cliente VIP</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" (click)="cancelar()" class="btn-secondary">
+        Cancelar
+      </button>
+      <button type="submit" class="btn-primary">
+        Guardar Cliente
+      </button>
+    </div>
+  </form>
+</div>

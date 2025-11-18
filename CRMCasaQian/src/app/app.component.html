@@ -1,0 +1,40 @@
+<div class="app-container">
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <h1>🍲 Casa Qian CRM</h1>
+      <p class="navbar-subtitle">Hotpot Restaurant</p>
+    </div>
+    <button class="menu-toggle" (click)="toggleMenu()">
+      ☰
+    </button>
+    <div class="navbar-menu" [class.active]="menuAbierto">
+      <a routerLink="/dashboard" routerLinkActive="active" class="nav-link" (click)="menuAbierto = false">
+        <span class="nav-icon">📊</span>
+        <span>Dashboard</span>
+      </a>
+      <a routerLink="/clientes" routerLinkActive="active" class="nav-link" (click)="menuAbierto = false">
+        <span class="nav-icon">👥</span>
+        <span>Clientes</span>
+      </a>
+      <a routerLink="/reservas" routerLinkActive="active" class="nav-link" (click)="menuAbierto = false">
+        <span class="nav-icon">📅</span>
+        <span>Reservas</span>
+      </a>
+      <a routerLink="/productos" routerLinkActive="active" class="nav-link" (click)="menuAbierto = false">
+        <span class="nav-icon">🥘</span>
+        <span>Productos</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- Contenido principal -->
+  <main class="main-content">
+    <router-outlet />
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>© 2024 Casa Qian - Hotpot Restaurant | Sistema CRM</p>
+  </footer>
+</div>
