@@ -23,8 +23,10 @@ export class ClientesComponent implements OnInit {
   }
 
   cargarClientes() {
-    this.clientes = this.clienteService.getClientes();
-    this.clientesFiltrados = this.clientes;
+    this.clienteService.getClientes().subscribe(clientes => {
+      this.clientes = clientes;
+      this.clientesFiltrados = clientes;
+    });
   }
 
   buscarClientes(event: Event) {
@@ -34,14 +36,17 @@ export class ClientesComponent implements OnInit {
     if (termino.trim() === '') {
       this.clientesFiltrados = this.clientes;
     } else {
-      this.clientesFiltrados = this.clienteService.buscarClientes(termino);
+      this.clienteService.buscarClientes(termino).subscribe(clientes => {
+        this.clientesFiltrados = clientes;
+      });
     }
   }
 
   eliminarCliente(id: number) {
     if (confirm('¿Estás seguro de que quieres eliminar este cliente?')) {
-      this.clienteService.deleteCliente(id);
-      this.cargarClientes();
+      this.clienteService.deleteCliente(id).subscribe(() => {
+        this.cargarClientes();
+      });
     }
   }
 }

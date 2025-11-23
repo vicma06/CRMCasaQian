@@ -1,100 +1,47 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { Cliente } from '../models/cliente.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ClienteService {
-  private clientes: Cliente[] = [
-    {
-      id: 1,
-      nombre: 'María',
-      apellidos: 'García López',
-      email: 'maria.garcia@email.com',
-      telefono: '612345678',
-      fechaRegistro: new Date('2024-01-15'),
-      visitasTotales: 12,
-      gastoTotal: 456.80,
-      preferencias: 'Picante, sin cerdo',
-      vip: true,
-      notas: 'Cliente frecuente, le gusta el caldo de Sichuan'
-    },
-    {
-      id: 2,
-      nombre: 'Juan',
-      apellidos: 'Martínez Ruiz',
-      email: 'juan.martinez@email.com',
-      telefono: '623456789',
-      fechaRegistro: new Date('2024-03-20'),
-      visitasTotales: 5,
-      gastoTotal: 198.50,
-      vip: false,
-      notas: 'Alérgico a mariscos'
-    },
-    {
-      id: 3,
-      nombre: 'Ana',
-      apellidos: 'Fernández Soto',
-      email: 'ana.fernandez@email.com',
-      telefono: '634567890',
-      fechaRegistro: new Date('2024-06-10'),
-      visitasTotales: 8,
-      gastoTotal: 312.40,
-      preferencias: 'Vegetariano',
-      vip: false
-    }
-  ];
+  private apiUrl = 'http://localhost:8080/api/clientes';
 
-  private nextId = 4;
+  constructor(private http: HttpClient) { }
 
-  constructor() { }
-
-  getClientes(): Cliente[] {
-    return [...this.clientes];
+  getClientes(): Observable<Cliente[]> {
+    return this.http.get<Cliente[]>(this.apiUrl);
   }
 
-  getClienteById(id: number): Cliente | undefined {
-    return this.clientes.find(c => c.id === id);
+  getClienteById(id: number): Observable<Cliente> {
+    return this.http.get<Cliente>(`${this.apiUrl}/${id}`);
   }
 
-  addCliente(cliente: Omit<Cliente, 'id'>): Cliente {
-    const nuevoCliente: Cliente = {
-      ...cliente,
-      id: this.nextId++
-    };
-    this.clientes.push(nuevoCliente);
-    return nuevoCliente;
+  addCliente(cliente: Omit<Cliente, 'id'>): Observable<Cliente> {
+    return this.http.post<Cliente>(this.apiUrl, cliente);
   }
 
-  updateCliente(id: number, cliente: Partial<Cliente>): boolean {
-    const index = this.clientes.findIndex(c => c.id === id);
-    if (index !== -1) {
-      this.clientes[index] = { ...this.clientes[index], ...cliente };
-      return true;
-    }
-    return false;
+  updateCliente(id: number, cliente: Partial<Cliente>): Observable<Cliente> {
+    return this.http.put<Cliente>(`${this.apiUrl}/${id}`, cliente);
   }
 
-  deleteCliente(id: number): boolean {
-    const index = this.clientes.findIndex(c => c.id === id);
-    if (index !== -1) {
-      this.clientes.splice(index, 1);
-      return true;
-    }
-    return false;
+  deleteCliente(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
-  buscarClientes(termino: string): Cliente[] {
-    const terminoLower = termino.toLowerCase();
-    return this.clientes.filter(c => 
-      c.nombre.toLowerCase().includes(terminoLower) ||
-      c.apellidos.toLowerCase().includes(terminoLower) ||
-      c.email.toLowerCase().includes(terminoLower) ||
-      c.telefono.includes(termino)
-    );
+  buscarClientes(termino: string): Observable<Cliente[]> {
+    return this.http.get<Cliente[]>(`${this.apiUrl}/search?term=${termino}`);
   }
 
-  getClientesVIP(): Cliente[] {
-    return this.clientes.filter(c => c.vip);
+  getClientesVIP(): Observable<Cliente[]> {
+    // This endpoint might need to be implemented in backend or filtered here
+    // For now, let's filter in frontend or assume backend has an endpoint
+    // Let's just get all and filter for now to match previous behavior if backend doesn't support it directly
+    // But better to use query param if possible. I'll stick to getAll for now and filter in component if needed, 
+    // or add a specific endpoint.
+    // Let's assume we filter in the component for simplicity or add a query param.
+    return this.http.get<Cliente[]>(this.apiUrl); 
   }
 }

@@ -23,17 +23,22 @@ export class ProductosComponent implements OnInit {
 
   cargarProductos() {
     if (this.categoriaSeleccionada === 'todas') {
-      this.productos = this.productoService.getProductos();
+      this.productoService.getProductos().subscribe(productos => {
+        this.productos = productos;
+      });
     } else {
-      this.productos = this.productoService.getProductosPorCategoria(this.categoriaSeleccionada);
+      this.productoService.getProductosPorCategoria(this.categoriaSeleccionada).subscribe(productos => {
+        this.productos = productos;
+      });
     }
   }
 
   cambiarDisponibilidad(id: number) {
     const producto = this.productos.find(p => p.id === id);
     if (producto) {
-      this.productoService.updateProducto(id, { disponible: !producto.disponible });
-      this.cargarProductos();
+      this.productoService.updateProducto(id, { disponible: !producto.disponible }).subscribe(() => {
+        this.cargarProductos();
+      });
     }
   }
 }

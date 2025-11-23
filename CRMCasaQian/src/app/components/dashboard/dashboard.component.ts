@@ -4,6 +4,7 @@ import { RouterLink } from '@angular/router';
 import { ClienteService } from '../../services/cliente.service';
 import { ReservaService } from '../../services/reserva.service';
 import { PedidoService } from '../../services/pedido.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -24,25 +25,31 @@ export class DashboardComponent implements OnInit {
   constructor(
     private clienteService: ClienteService,
     private reservaService: ReservaService,
-    private pedidoService: PedidoService
+    private pedidoService: PedidoService,
+    public authService: AuthService
   ) {}
 
   ngOnInit() {
-    this.cargarEstadisticas();
+    if (this.authService.isAdmin()) {
+      this.cargarEstadisticas();
+    }
   }
 
   cargarEstadisticas() {
-    const clientes = this.clienteService.getClientes();
-    this.totalClientes = clientes.length;
-    this.clientesVIP = this.clienteService.getClientesVIP().length;
+    this.clienteService.getClientes().subscribe(clientes => {
+      this.totalClientes = clientes.length;
+      this.clientesVIP = clientes.filter(c => c.vip).length;
+    });
 
-    const reservasHoy = this.reservaService.getReservasHoy();
-    this.reservasHoy = reservasHoy.length;
-    this.ultimasReservas = reservasHoy.slice(0, 5);
+    this.reservaService.getReservasHoy().subscribe(reservas => {
+      this.reservasHoy = reservas.length;
+      this.ultimasReservas = reservas.slice(0, 5);
+    });
 
-    const pedidosHoy = this.pedidoService.getPedidosHoy();
-    this.pedidosHoy = pedidosHoy.length;
-    this.ventasHoy = pedidosHoy.reduce((total, p) => total + p.total, 0);
-    this.ultimosPedidos = pedidosHoy.slice(0, 5);
+    this.pedidoService.getPedidosHoy().subscribe(pedidos => {
+      this.pedidosHoy = pedidos.length;
+      this.ventasHoy = pedidos.reduce((total, p) => total + p.total, 0);
+      this.ultimosPedidos = pedidos.slice(0, 5);
+    });
   }
 }

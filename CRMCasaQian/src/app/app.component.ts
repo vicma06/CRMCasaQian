@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,14 @@ export class AppComponent {
   title = 'CRM Casa Qian';
   menuAbierto = false;
 
+  constructor(public authService: AuthService) {}
+
   toggleMenu() {
     this.menuAbierto = !this.menuAbierto;
+  }
+
+  logout() {
+    this.authService.logout();
+    this.menuAbierto = false;
   }
 }

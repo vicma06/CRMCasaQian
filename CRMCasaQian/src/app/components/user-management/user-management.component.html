@@ -1,0 +1,36 @@
+<div class="user-management-container">
+  <h2>Gestión de Usuarios</h2>
+  
+  <div *ngIf="loading">Cargando usuarios...</div>
+  <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+  <table class="table" *ngIf="!loading && !error">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Usuario</th>
+        <th>Rol Actual</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{ user.id }}</td>
+        <td>{{ user.username }}</td>
+        <td>
+          <span [class.badge-admin]="user.role === 'ADMIN'" [class.badge-client]="user.role === 'CLIENTE'">
+            {{ user.role }}
+          </span>
+        </td>
+        <td>
+          <button class="btn btn-sm" 
+                  [class.btn-warning]="user.role === 'CLIENTE'"
+                  [class.btn-secondary]="user.role === 'ADMIN'"
+                  (click)="toggleRole(user)">
+            {{ user.role === 'CLIENTE' ? 'Hacer Admin' : 'Hacer Cliente' }}
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

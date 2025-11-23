@@ -35,9 +35,10 @@ export class ClienteFormComponent implements OnInit {
 
   guardarCliente() {
     if (this.validarFormulario()) {
-      this.clienteService.addCliente(this.cliente as Omit<Cliente, 'id'>);
-      alert('Cliente registrado exitosamente');
-      this.router.navigate(['/clientes']);
+      this.clienteService.addCliente(this.cliente as Omit<Cliente, 'id'>).subscribe(() => {
+        alert('Cliente registrado exitosamente');
+        this.router.navigate(['/clientes']);
+      });
     }
   }
 

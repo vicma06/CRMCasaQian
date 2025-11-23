@@ -33,20 +33,24 @@ export class ReservaFormComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.clientes = this.clienteService.getClientes();
+    this.clienteService.getClientes().subscribe(clientes => {
+      this.clientes = clientes;
+    });
   }
 
   guardarReserva() {
     if (this.validarFormulario()) {
-      const cliente = this.clientes.find(c => c.id === this.reserva.clienteId);
+      const cliente = this.clientes.find(c => c.id === Number(this.reserva.clienteId));
       const reservaCompleta = {
         ...this.reserva,
+        clienteId: Number(this.reserva.clienteId),
         nombreCliente: cliente ? `${cliente.nombre} ${cliente.apellidos}` : ''
       };
       
-      this.reservaService.addReserva(reservaCompleta as Omit<Reserva, 'id'>);
-      alert('Reserva creada exitosamente');
-      this.router.navigate(['/reservas']);
+      this.reservaService.addReserva(reservaCompleta as Omit<Reserva, 'id'>).subscribe(() => {
+        alert('Reserva creada exitosamente');
+        this.router.navigate(['/reservas']);
+      });
     }
   }
 

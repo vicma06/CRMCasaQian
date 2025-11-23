@@ -1,6 +1,6 @@
 <div class="app-container">
   <!-- Navbar -->
-  <nav class="navbar">
+  <nav class="navbar" *ngIf="authService.currentUser$ | async as user">
     <div class="navbar-brand">
       <h1>🍲 Casa Qian CRM</h1>
       <p class="navbar-subtitle">Hotpot Restaurant</p>
@@ -13,10 +13,15 @@
         <span class="nav-icon">📊</span>
         <span>Dashboard</span>
       </a>
-      <a routerLink="/clientes" routerLinkActive="active" class="nav-link" (click)="menuAbierto = false">
-        <span class="nav-icon">👥</span>
-        <span>Clientes</span>
-      </a>
+      
+      <!-- Admin Only Links -->
+      <ng-container *ngIf="user.role === 'ADMIN'">
+        <a routerLink="/clientes" routerLinkActive="active" class="nav-link" (click)="menuAbierto = false">
+          <span class="nav-icon">👥</span>
+          <span>Clientes</span>
+        </a>
+      </ng-container>
+
       <a routerLink="/reservas" routerLinkActive="active" class="nav-link" (click)="menuAbierto = false">
         <span class="nav-icon">📅</span>
         <span>Reservas</span>
@@ -24,6 +29,11 @@
       <a routerLink="/productos" routerLinkActive="active" class="nav-link" (click)="menuAbierto = false">
         <span class="nav-icon">🥘</span>
         <span>Productos</span>
+      </a>
+
+      <a (click)="logout()" class="nav-link logout-link">
+        <span class="nav-icon">🚪</span>
+        <span>Salir</span>
       </a>
     </div>
   </nav>
@@ -34,7 +44,7 @@
   </main>
 
   <!-- Footer -->
-  <footer class="footer">
+  <footer class="footer" *ngIf="authService.currentUser$ | async">
     <p>© 2024 Casa Qian - Hotpot Restaurant | Sistema CRM</p>
   </footer>
 </div>

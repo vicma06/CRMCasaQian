@@ -4,7 +4,7 @@
     <p class="subtitle">Panel de Control CRM</p>
   </div>
 
-  <div class="stats-grid">
+  <div class="stats-grid" *ngIf="authService.isAdmin()">
     <div class="stat-card clientes">
       <div class="stat-icon">👥</div>
       <div class="stat-info">
@@ -46,7 +46,16 @@
     </div>
   </div>
 
-  <div class="content-grid">
+  <div class="welcome-client" *ngIf="!authService.isAdmin()">
+    <h2>Bienvenido a Casa Qian</h2>
+    <p>Disfruta de la mejor experiencia Hotpot.</p>
+    <div class="client-actions">
+      <a routerLink="/reservas/nueva" class="action-btn">Hacer una Reserva</a>
+      <a routerLink="/productos" class="action-btn">Ver Carta</a>
+    </div>
+  </div>
+
+  <div class="content-grid" *ngIf="authService.isAdmin()">
     <div class="section">
       <div class="section-header">
         <h2>📋 Reservas de Hoy</h2>
@@ -89,7 +98,17 @@
   <div class="quick-actions">
     <h2>⚡ Acciones Rápidas</h2>
     <div class="action-buttons">
-      <a routerLink="/clientes/nuevo" class="action-btn">
+      <a routerLink="/profile" class="action-btn">
+        <span class="action-icon">✏️</span>
+        <span>Editar Perfil</span>
+      </a>
+      
+      <a routerLink="/users" class="action-btn" *ngIf="authService.isAdmin()">
+        <span class="action-icon">👥</span>
+        <span>Gestión Usuarios</span>
+      </a>
+
+      <a routerLink="/clientes/nuevo" class="action-btn" *ngIf="authService.isAdmin()">
         <span class="action-icon">👤</span>
         <span>Nuevo Cliente</span>
       </a>

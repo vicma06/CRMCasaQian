@@ -13,6 +13,7 @@ import { ReservaService } from '../../services/reserva.service';
 })
 export class ReservasComponent implements OnInit {
   reservas: Reserva[] = [];
+  todasReservas: Reserva[] = [];
   filtroEstado: string = 'todas';
 
   constructor(private reservaService: ReservaService) {}
@@ -22,28 +23,31 @@ export class ReservasComponent implements OnInit {
   }
 
   cargarReservas() {
-    this.reservas = this.reservaService.getReservas();
-    this.aplicarFiltro();
+    this.reservaService.getReservas().subscribe(reservas => {
+      this.todasReservas = reservas;
+      this.aplicarFiltro();
+    });
   }
 
   aplicarFiltro() {
-    const todasReservas = this.reservaService.getReservas();
     if (this.filtroEstado === 'todas') {
-      this.reservas = todasReservas;
+      this.reservas = this.todasReservas;
     } else {
-      this.reservas = todasReservas.filter(r => r.estado === this.filtroEstado);
+      this.reservas = this.todasReservas.filter(r => r.estado === this.filtroEstado);
     }
   }
 
   cambiarEstado(id: number, nuevoEstado: string) {
-    this.reservaService.updateReserva(id, { estado: nuevoEstado as any });
-    this.cargarReservas();
+    this.reservaService.updateReserva(id, { estado: nuevoEstado as any }).subscribe(() => {
+      this.cargarReservas();
+    });
   }
 
   eliminarReserva(id: number) {
     if (confirm('¿Estás seguro de que quieres eliminar esta reserva?')) {
-      this.reservaService.deleteReserva(id);
-      this.cargarReservas();
+      this.reservaService.deleteReserva(id).subscribe(() => {
+        this.cargarReservas();
+      });
     }
   }
 }

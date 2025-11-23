@@ -1,100 +1,48 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { Reserva } from '../models/reserva.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ReservaService {
-  private reservas: Reserva[] = [
-    {
-      id: 1,
-      clienteId: 1,
-      nombreCliente: 'María García López',
-      fecha: new Date('2024-11-20'),
-      hora: '20:00',
-      numeroPersonas: 4,
-      mesaId: 5,
-      estado: 'confirmada',
-      notas: 'Mesa junto a la ventana si es posible'
-    },
-    {
-      id: 2,
-      clienteId: 2,
-      nombreCliente: 'Juan Martínez Ruiz',
-      fecha: new Date('2024-11-19'),
-      hora: '21:30',
-      numeroPersonas: 2,
-      mesaId: 2,
-      estado: 'pendiente'
-    },
-    {
-      id: 3,
-      clienteId: 3,
-      nombreCliente: 'Ana Fernández Soto',
-      fecha: new Date('2024-11-21'),
-      hora: '19:00',
-      numeroPersonas: 6,
-      estado: 'confirmada',
-      notas: 'Celebración de cumpleaños'
-    }
-  ];
+  private apiUrl = 'http://localhost:8080/api/reservas';
 
-  private nextId = 4;
+  constructor(private http: HttpClient) { }
 
-  constructor() { }
-
-  getReservas(): Reserva[] {
-    return [...this.reservas];
+  getReservas(): Observable<Reserva[]> {
+    return this.http.get<Reserva[]>(this.apiUrl);
   }
 
-  getReservaById(id: number): Reserva | undefined {
-    return this.reservas.find(r => r.id === id);
+  getReservaById(id: number): Observable<Reserva> {
+    return this.http.get<Reserva>(`${this.apiUrl}/${id}`);
   }
 
-  getReservasPorCliente(clienteId: number): Reserva[] {
-    return this.reservas.filter(r => r.clienteId === clienteId);
+  getReservasPorCliente(clienteId: number): Observable<Reserva[]> {
+    return this.http.get<Reserva[]>(`${this.apiUrl}/cliente/${clienteId}`);
   }
 
-  getReservasPorFecha(fecha: Date): Reserva[] {
-    return this.reservas.filter(r => 
-      r.fecha.toDateString() === fecha.toDateString()
-    );
+  getReservasPorFecha(fecha: Date): Observable<Reserva[]> {
+    const fechaStr = fecha.toISOString().split('T')[0];
+    return this.http.get<Reserva[]>(`${this.apiUrl}/fecha/${fechaStr}`);
   }
 
-  addReserva(reserva: Omit<Reserva, 'id'>): Reserva {
-    const nuevaReserva: Reserva = {
-      ...reserva,
-      id: this.nextId++
-    };
-    this.reservas.push(nuevaReserva);
-    return nuevaReserva;
+  addReserva(reserva: Omit<Reserva, 'id'>): Observable<Reserva> {
+    return this.http.post<Reserva>(this.apiUrl, reserva);
   }
 
-  updateReserva(id: number, reserva: Partial<Reserva>): boolean {
-    const index = this.reservas.findIndex(r => r.id === id);
-    if (index !== -1) {
-      this.reservas[index] = { ...this.reservas[index], ...reserva };
-      return true;
-    }
-    return false;
+  updateReserva(id: number, reserva: Partial<Reserva>): Observable<Reserva> {
+    return this.http.put<Reserva>(`${this.apiUrl}/${id}`, reserva);
   }
 
-  deleteReserva(id: number): boolean {
-    const index = this.reservas.findIndex(r => r.id === id);
-    if (index !== -1) {
-      this.reservas.splice(index, 1);
-      return true;
-    }
-    return false;
+  deleteReserva(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
-  getReservasHoy(): Reserva[] {
+  getReservasHoy(): Observable<Reserva[]> {
     const hoy = new Date();
-    hoy.setHours(0, 0, 0, 0);
-    return this.reservas.filter(r => {
-      const fechaReserva = new Date(r.fecha);
-      fechaReserva.setHours(0, 0, 0, 0);
-      return fechaReserva.getTime() === hoy.getTime();
-    });
+    const fechaStr = hoy.toISOString().split('T')[0];
+    return this.http.get<Reserva[]>(`${this.apiUrl}/fecha/${fechaStr}`);
   }
 }
