@@ -9,114 +9,52 @@ import { AuthService } from '../../services/auth.service';
   standalone: true,
   imports: [CommonModule, FormsModule, RouterLink],
   template: `
-    <div class="login-container">
-      <div class="login-card">
-        <h2>Iniciar Sesión</h2>
-        <p class="subtitle">CRM Casa Qian</p>
+    <div class="min-h-screen flex items-center justify-center bg-gray-100">
+      <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+        <h2 class="text-2xl font-bold text-center text-gray-800 mb-2">Iniciar Sesión</h2>
+        <p class="text-center text-gray-600 mb-8">CRM Casa Qian</p>
         
         <form (ngSubmit)="onSubmit()">
-          <div class="form-group">
-            <label for="username">Usuario</label>
+          <div class="mb-6">
+            <label for="username" class="block text-gray-700 text-sm font-bold mb-2">Usuario</label>
             <input 
               type="text" 
               id="username" 
               [(ngModel)]="credentials.username" 
               name="username" 
               required
+              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
               placeholder="Ingresa tu usuario">
           </div>
           
-          <div class="form-group">
-            <label for="password">Contraseña</label>
+          <div class="mb-6">
+            <label for="password" class="block text-gray-700 text-sm font-bold mb-2">Contraseña</label>
             <input 
               type="password" 
               id="password" 
               [(ngModel)]="credentials.password" 
               name="password" 
               required
+              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
               placeholder="Ingresa tu contraseña">
           </div>
 
-          <div *ngIf="error" class="error-message">
+          <div *ngIf="error" class="text-red-600 text-center mb-4 text-sm">
             {{ error }}
           </div>
 
-          <button type="submit" [disabled]="loading">
+          <button type="submit" [disabled]="loading" class="w-full bg-red-600 text-white font-bold py-2 px-4 rounded hover:bg-red-700 transition duration-300 disabled:bg-gray-400">
             {{ loading ? 'Cargando...' : 'Entrar' }}
           </button>
 
-          <div class="register-link">
-            <p>¿No tienes cuenta? <a routerLink="/register">Crear una cuenta</a></p>
+          <div class="mt-4 text-center text-sm text-gray-600">
+            <p>¿No tienes cuenta? <a routerLink="/register" class="text-red-600 hover:text-red-800 font-semibold">Crear una cuenta</a></p>
           </div>
         </form>
       </div>
     </div>
   `,
-  styles: [`
-    .login-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background-color: #f5f5f5;
-    }
-    .login-card {
-      background: white;
-      padding: 2rem;
-      border-radius: 8px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-      width: 100%;
-      max-width: 400px;
-    }
-    h2 {
-      text-align: center;
-      color: #333;
-      margin-bottom: 0.5rem;
-    }
-    .subtitle {
-      text-align: center;
-      color: #666;
-      margin-bottom: 2rem;
-    }
-    .form-group {
-      margin-bottom: 1.5rem;
-    }
-    label {
-      display: block;
-      margin-bottom: 0.5rem;
-      color: #555;
-    }
-    input {
-      width: 100%;
-      padding: 0.75rem;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      font-size: 1rem;
-    }
-    button {
-      width: 100%;
-      padding: 0.75rem;
-      background-color: #d32f2f;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
-    button:hover {
-      background-color: #b71c1c;
-    }
-    button:disabled {
-      background-color: #ccc;
-    }
-    .error-message {
-      color: #d32f2f;
-      text-align: center;
-      margin-bottom: 1rem;
-      font-size: 0.9rem;
-    }
-  `]
+  styles: []
 })
 export class LoginComponent {
   credentials = { username: '', password: '' };

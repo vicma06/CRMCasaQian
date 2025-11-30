@@ -1,127 +1,138 @@
-<div class="dashboard">
-  <div class="header">
-    <h1>🍲 Casa Qian - Hotpot Restaurant</h1>
-    <p class="subtitle">Panel de Control CRM</p>
+<div class="p-8 max-w-7xl mx-auto">
+  <div class="text-center mb-8">
+    <h1 class="text-red-600 text-4xl font-bold m-0">🍲 Casa Qian - Hotpot Restaurant</h1>
+    <p class="text-gray-600 text-lg">Panel de Control CRM</p>
   </div>
 
-  <div class="stats-grid" *ngIf="authService.isAdmin()">
-    <div class="stat-card clientes">
-      <div class="stat-icon">👥</div>
-      <div class="stat-info">
-        <h3>{{ totalClientes }}</h3>
-        <p>Total Clientes</p>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mb-8" *ngIf="authService.isAdmin()">
+    <div class="bg-white rounded-xl p-6 shadow-md flex items-center gap-4 transition-transform hover:-translate-y-1 hover:shadow-lg">
+      <div class="text-5xl">👥</div>
+      <div class="flex flex-col">
+        <h3 class="text-3xl font-bold text-gray-800 m-0">{{ totalClientes }}</h3>
+        <p class="text-gray-600 text-sm m-0">Total Clientes</p>
       </div>
     </div>
 
-    <div class="stat-card vip">
-      <div class="stat-icon">⭐</div>
-      <div class="stat-info">
-        <h3>{{ clientesVIP }}</h3>
-        <p>Clientes VIP</p>
+    <div class="bg-white rounded-xl p-6 shadow-md flex items-center gap-4 transition-transform hover:-translate-y-1 hover:shadow-lg">
+      <div class="text-5xl">⭐</div>
+      <div class="flex flex-col">
+        <h3 class="text-3xl font-bold text-gray-800 m-0">{{ clientesVIP }}</h3>
+        <p class="text-gray-600 text-sm m-0">Clientes VIP</p>
       </div>
     </div>
 
-    <div class="stat-card reservas">
-      <div class="stat-icon">📅</div>
-      <div class="stat-info">
-        <h3>{{ reservasHoy }}</h3>
-        <p>Reservas Hoy</p>
+    <div class="bg-white rounded-xl p-6 shadow-md flex items-center gap-4 transition-transform hover:-translate-y-1 hover:shadow-lg">
+      <div class="text-5xl">📅</div>
+      <div class="flex flex-col">
+        <h3 class="text-3xl font-bold text-gray-800 m-0">{{ reservasHoy }}</h3>
+        <p class="text-gray-600 text-sm m-0">Reservas Hoy</p>
       </div>
     </div>
 
-    <div class="stat-card pedidos">
-      <div class="stat-icon">🍜</div>
-      <div class="stat-info">
-        <h3>{{ pedidosHoy }}</h3>
-        <p>Pedidos Hoy</p>
+    <div class="bg-white rounded-xl p-6 shadow-md flex items-center gap-4 transition-transform hover:-translate-y-1 hover:shadow-lg">
+      <div class="text-5xl">🍜</div>
+      <div class="flex flex-col">
+        <h3 class="text-3xl font-bold text-gray-800 m-0">{{ pedidosHoy }}</h3>
+        <p class="text-gray-600 text-sm m-0">Pedidos Hoy</p>
       </div>
     </div>
 
-    <div class="stat-card ventas">
-      <div class="stat-icon">💰</div>
-      <div class="stat-info">
-        <h3>{{ ventasHoy | number:'1.2-2' }}€</h3>
-        <p>Ventas Hoy</p>
+    <div class="bg-white rounded-xl p-6 shadow-md flex items-center gap-4 transition-transform hover:-translate-y-1 hover:shadow-lg">
+      <div class="text-5xl">💰</div>
+      <div class="flex flex-col">
+        <h3 class="text-3xl font-bold text-gray-800 m-0">{{ ventasHoy | number:'1.2-2' }}€</h3>
+        <p class="text-gray-600 text-sm m-0">Ventas Hoy</p>
       </div>
-    </div>
-  </div>
-
-  <div class="welcome-client" *ngIf="!authService.isAdmin()">
-    <h2>Bienvenido a Casa Qian</h2>
-    <p>Disfruta de la mejor experiencia Hotpot.</p>
-    <div class="client-actions">
-      <a routerLink="/reservas/nueva" class="action-btn">Hacer una Reserva</a>
-      <a routerLink="/productos" class="action-btn">Ver Carta</a>
     </div>
   </div>
 
-  <div class="content-grid" *ngIf="authService.isAdmin()">
-    <div class="section">
-      <div class="section-header">
-        <h2>📋 Reservas de Hoy</h2>
-        <a routerLink="/reservas" class="link-btn">Ver todas</a>
+  <div class="bg-white rounded-xl p-12 text-center shadow-md mb-8" *ngIf="!authService.isAdmin()">
+    <h2 class="text-red-600 text-3xl mb-4">Bienvenido a Casa Qian</h2>
+    <p class="mb-8">Disfruta de la mejor experiencia Hotpot.</p>
+    <div class="flex justify-center gap-6 mt-8">
+      <a routerLink="/reservas/nueva" class="bg-red-600 text-white px-8 py-4 rounded-lg font-bold hover:bg-red-700 transition-colors no-underline">Hacer una Reserva</a>
+      <a routerLink="/productos" class="bg-red-600 text-white px-8 py-4 rounded-lg font-bold hover:bg-red-700 transition-colors no-underline">Ver Carta</a>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8" *ngIf="authService.isAdmin()">
+    <div class="bg-white rounded-xl p-6 shadow-md">
+      <div class="flex justify-between items-center mb-4 pb-4 border-b-2 border-gray-100">
+        <h2 class="text-xl font-bold text-gray-800 m-0">📋 Reservas de Hoy</h2>
+        <a routerLink="/reservas" class="text-red-600 text-sm font-medium hover:underline">Ver todas</a>
       </div>
-      <div class="list">
-        <div *ngFor="let reserva of ultimasReservas" class="list-item">
-          <div class="item-info">
-            <strong>{{ reserva.nombreCliente }}</strong>
-            <span class="item-detail">{{ reserva.hora }} - {{ reserva.numeroPersonas }} personas</span>
+      <div class="flex flex-col gap-3">
+        <div *ngFor="let reserva of ultimasReservas" class="flex justify-between items-center p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+          <div class="flex flex-col gap-1">
+            <strong class="text-gray-800">{{ reserva.nombreCliente }}</strong>
+            <span class="text-sm text-gray-500">{{ reserva.hora }} - {{ reserva.numeroPersonas }} personas</span>
           </div>
-          <span [class]="'badge badge-' + reserva.estado">{{ reserva.estado }}</span>
+          <span [class]="'px-3 py-1 rounded-full text-xs font-bold uppercase ' + 
+            (reserva.estado === 'pendiente' ? 'bg-yellow-100 text-yellow-800' : 
+             reserva.estado === 'confirmada' ? 'bg-green-100 text-green-800' : 
+             reserva.estado === 'cancelada' ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800')">
+            {{ reserva.estado }}
+          </span>
         </div>
-        <div *ngIf="ultimasReservas.length === 0" class="empty-state">
+        <div *ngIf="ultimasReservas.length === 0" class="text-center p-8 text-gray-400 italic">
           No hay reservas para hoy
         </div>
       </div>
     </div>
 
-    <div class="section">
-      <div class="section-header">
-        <h2>🍽️ Pedidos Recientes</h2>
-        <a routerLink="/pedidos" class="link-btn">Ver todos</a>
+    <div class="bg-white rounded-xl p-6 shadow-md">
+      <div class="flex justify-between items-center mb-4 pb-4 border-b-2 border-gray-100">
+        <h2 class="text-xl font-bold text-gray-800 m-0">🍽️ Pedidos Recientes</h2>
+        <a routerLink="/pedidos" class="text-red-600 text-sm font-medium hover:underline">Ver todos</a>
       </div>
-      <div class="list">
-        <div *ngFor="let pedido of ultimosPedidos" class="list-item">
-          <div class="item-info">
-            <strong>{{ pedido.nombreCliente }}</strong>
-            <span class="item-detail">Mesa {{ pedido.mesaId }} - {{ pedido.total | number:'1.2-2' }}€</span>
+      <div class="flex flex-col gap-3">
+        <div *ngFor="let pedido of ultimosPedidos" class="flex justify-between items-center p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+          <div class="flex flex-col gap-1">
+            <strong class="text-gray-800">{{ pedido.nombreCliente }}</strong>
+            <span class="text-sm text-gray-500">Mesa {{ pedido.mesaId }} - {{ pedido.total | number:'1.2-2' }}€</span>
           </div>
-          <span [class]="'badge badge-' + pedido.estado">{{ pedido.estado }}</span>
+          <span [class]="'px-3 py-1 rounded-full text-xs font-bold uppercase ' + 
+            (pedido.estado === 'pendiente' ? 'bg-yellow-100 text-yellow-800' : 
+             pedido.estado === 'servido' || pedido.estado === 'pagado' ? 'bg-green-100 text-green-800' : 
+             pedido.estado === 'cancelado' ? 'bg-red-100 text-red-800' : 
+             pedido.estado === 'preparando' ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-800')">
+            {{ pedido.estado }}
+          </span>
         </div>
-        <div *ngIf="ultimosPedidos.length === 0" class="empty-state">
+        <div *ngIf="ultimosPedidos.length === 0" class="text-center p-8 text-gray-400 italic">
           No hay pedidos hoy
         </div>
       </div>
     </div>
   </div>
 
-  <div class="quick-actions">
-    <h2>⚡ Acciones Rápidas</h2>
-    <div class="action-buttons">
-      <a routerLink="/profile" class="action-btn">
-        <span class="action-icon">✏️</span>
+  <div class="bg-white rounded-xl p-6 shadow-md">
+    <h2 class="text-xl font-bold text-gray-800 mb-6">⚡ Acciones Rápidas</h2>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <a routerLink="/profile" class="flex items-center gap-3 p-4 bg-gradient-to-r from-red-700 to-red-500 text-white rounded-lg font-semibold transition-all hover:-translate-y-1 hover:shadow-lg no-underline">
+        <span class="text-2xl">✏️</span>
         <span>Editar Perfil</span>
       </a>
       
-      <a routerLink="/users" class="action-btn" *ngIf="authService.isAdmin()">
-        <span class="action-icon">👥</span>
+      <a routerLink="/users" class="flex items-center gap-3 p-4 bg-gradient-to-r from-red-700 to-red-500 text-white rounded-lg font-semibold transition-all hover:-translate-y-1 hover:shadow-lg no-underline" *ngIf="authService.isAdmin()">
+        <span class="text-2xl">👥</span>
         <span>Gestión Usuarios</span>
       </a>
 
-      <a routerLink="/clientes/nuevo" class="action-btn" *ngIf="authService.isAdmin()">
-        <span class="action-icon">👤</span>
+      <a routerLink="/clientes/nuevo" class="flex items-center gap-3 p-4 bg-gradient-to-r from-red-700 to-red-500 text-white rounded-lg font-semibold transition-all hover:-translate-y-1 hover:shadow-lg no-underline" *ngIf="authService.isAdmin()">
+        <span class="text-2xl">👤</span>
         <span>Nuevo Cliente</span>
       </a>
-      <a routerLink="/reservas/nueva" class="action-btn">
-        <span class="action-icon">📅</span>
+      <a routerLink="/reservas/nueva" class="flex items-center gap-3 p-4 bg-gradient-to-r from-red-700 to-red-500 text-white rounded-lg font-semibold transition-all hover:-translate-y-1 hover:shadow-lg no-underline">
+        <span class="text-2xl">📅</span>
         <span>Nueva Reserva</span>
       </a>
-      <a routerLink="/pedidos/nuevo" class="action-btn">
-        <span class="action-icon">🍜</span>
+      <a routerLink="/pedidos/nuevo" class="flex items-center gap-3 p-4 bg-gradient-to-r from-red-700 to-red-500 text-white rounded-lg font-semibold transition-all hover:-translate-y-1 hover:shadow-lg no-underline">
+        <span class="text-2xl">🍜</span>
         <span>Nuevo Pedido</span>
       </a>
-      <a routerLink="/productos" class="action-btn">
-        <span class="action-icon">🥘</span>
+      <a routerLink="/productos" class="flex items-center gap-3 p-4 bg-gradient-to-r from-red-700 to-red-500 text-white rounded-lg font-semibold transition-all hover:-translate-y-1 hover:shadow-lg no-underline">
+        <span class="text-2xl">🥘</span>
         <span>Gestionar Menú</span>
       </a>
     </div>

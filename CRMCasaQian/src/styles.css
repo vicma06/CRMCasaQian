@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* Estilos globales para CRM Casa Qian */
 * {
   margin: 0;
