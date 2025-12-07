@@ -1,46 +1,50 @@
-<div class="min-h-screen flex flex-col bg-gradient-to-br from-gray-50 to-slate-200">
+<div class="min-h-screen flex flex-col bg-brand-light">
   <!-- Navbar -->
-  <nav class="bg-gradient-to-r from-red-700 to-red-500 text-white px-6 py-4 shadow-lg sticky top-0 z-50 flex justify-between items-center" *ngIf="authService.currentUser$ | async as user">
-    <div class="flex flex-col">
-      <h1 class="m-0 text-2xl font-bold">🍲 Casa Qian CRM</h1>
-      <p class="m-0 text-sm opacity-90">Hotpot Restaurant</p>
+  <nav class="bg-brand-blue text-white px-6 py-4 shadow-lg sticky top-0 z-50 flex justify-between items-center border-b-4 border-brand-gold" *ngIf="authService.currentUser$ | async as user">
+    <div class="flex items-center gap-3">
+      <img src="/images/CasaQianLogo.png" alt="Casa Qian Logo" class="h-16 w-16 rounded-full border-2 border-brand-gold shadow-sm object-cover shrink-0">
+      <div class="flex flex-col">
+        <h1 class="m-0 text-2xl font-bold text-brand-gold">Casa Qian CRM</h1>
+        <p class="m-0 text-sm opacity-90 text-gray-300">Hotpot Restaurant</p>
+      </div>
     </div>
-    <button class="md:hidden text-white text-2xl p-2 focus:outline-none" (click)="toggleMenu()">
+    <button class="md:hidden text-brand-gold text-2xl p-2 focus:outline-none" (click)="toggleMenu()">
       ☰
     </button>
-    <div class="hidden md:flex gap-4 items-center" [class.flex]="menuAbierto" [class.flex-col]="menuAbierto" [class.absolute]="menuAbierto" [class.top-full]="menuAbierto" [class.left-0]="menuAbierto" [class.w-full]="menuAbierto" [class.bg-red-600]="menuAbierto" [class.p-4]="menuAbierto" [class.shadow-xl]="menuAbierto">
-      <a routerLink="/dashboard" routerLinkActive="bg-white text-red-700 shadow-md" class="flex items-center gap-2 px-4 py-2 text-white no-underline rounded-lg font-semibold transition-all duration-300 bg-white/10 hover:bg-white/20 hover:-translate-y-0.5" (click)="menuAbierto = false">
+    <div class="hidden md:flex gap-4 items-center" [class.flex]="menuAbierto" [class.flex-col]="menuAbierto" [class.absolute]="menuAbierto" [class.top-full]="menuAbierto" [class.left-0]="menuAbierto" [class.w-full]="menuAbierto" [class.bg-brand-blue]="menuAbierto" [class.p-4]="menuAbierto" [class.shadow-xl]="menuAbierto" [class.border-b-4]="menuAbierto" [class.border-brand-gold]="menuAbierto">
+      <a routerLink="/dashboard" routerLinkActive="bg-brand-gold text-brand-blue shadow-md" class="flex items-center gap-2 px-4 py-2 text-white no-underline rounded-lg font-semibold transition-all duration-300 hover:bg-white/10 hover:text-brand-gold hover:-translate-y-0.5" (click)="menuAbierto = false">
         <span class="text-lg">📊</span>
         <span>Dashboard</span>
       </a>
       
       <!-- Admin Only Links -->
       <ng-container *ngIf="user.role === 'ADMIN'">
-        <a routerLink="/users" routerLinkActive="bg-white text-red-700 shadow-md" class="flex items-center gap-2 px-4 py-2 text-white no-underline rounded-lg font-semibold transition-all duration-300 bg-white/10 hover:bg-white/20 hover:-translate-y-0.5" (click)="menuAbierto = false">
+        <a routerLink="/users" routerLinkActive="bg-brand-gold text-brand-blue shadow-md" class="flex items-center gap-2 px-4 py-2 text-white no-underline rounded-lg font-semibold transition-all duration-300 hover:bg-white/10 hover:text-brand-gold hover:-translate-y-0.5" (click)="menuAbierto = false">
           <span class="text-lg">👥</span>
           <span>Usuarios</span>
         </a>
-        <a routerLink="/clientes" routerLinkActive="bg-white text-red-700 shadow-md" class="flex items-center gap-2 px-4 py-2 text-white no-underline rounded-lg font-semibold transition-all duration-300 bg-white/10 hover:bg-white/20 hover:-translate-y-0.5" (click)="menuAbierto = false">
+        <a routerLink="/clientes" routerLinkActive="bg-brand-gold text-brand-blue shadow-md" class="flex items-center gap-2 px-4 py-2 text-white no-underline rounded-lg font-semibold transition-all duration-300 hover:bg-white/10 hover:text-brand-gold hover:-translate-y-0.5" (click)="menuAbierto = false">
           <span class="text-lg">👥</span>
           <span>Clientes</span>
         </a>
+        <a routerLink="/productos" routerLinkActive="bg-brand-gold text-brand-blue shadow-md" class="flex items-center gap-2 px-4 py-2 text-white no-underline rounded-lg font-semibold transition-all duration-300 hover:bg-white/10 hover:text-brand-gold hover:-translate-y-0.5" (click)="menuAbierto = false">
+          <span class="text-lg">🥘</span>
+          <span>Gestionar Menú</span>
+        </a>
       </ng-container>
 
-      <a routerLink="/reservas" routerLinkActive="bg-white text-red-700 shadow-md" class="flex items-center gap-2 px-4 py-2 text-white no-underline rounded-lg font-semibold transition-all duration-300 bg-white/10 hover:bg-white/20 hover:-translate-y-0.5" (click)="menuAbierto = false">
+      <a routerLink="/reservas" routerLinkActive="bg-brand-gold text-brand-blue shadow-md" class="flex items-center gap-2 px-4 py-2 text-white no-underline rounded-lg font-semibold transition-all duration-300 hover:bg-white/10 hover:text-brand-gold hover:-translate-y-0.5" (click)="menuAbierto = false">
         <span class="text-lg">📅</span>
         <span>Reservas</span>
       </a>
-      <a routerLink="/productos" routerLinkActive="bg-white text-red-700 shadow-md" class="flex items-center gap-2 px-4 py-2 text-white no-underline rounded-lg font-semibold transition-all duration-300 bg-white/10 hover:bg-white/20 hover:-translate-y-0.5" (click)="menuAbierto = false">
-        <span class="text-lg">🥘</span>
-        <span>Productos</span>
-      </a>
 
-      <a routerLink="/profile" routerLinkActive="bg-white text-red-700 shadow-md" class="flex items-center gap-2 px-4 py-2 text-white no-underline rounded-lg font-semibold transition-all duration-300 bg-white/10 hover:bg-white/20 hover:-translate-y-0.5" (click)="menuAbierto = false">
+
+      <a routerLink="/profile" routerLinkActive="bg-brand-gold text-brand-blue shadow-md" class="flex items-center gap-2 px-4 py-2 text-white no-underline rounded-lg font-semibold transition-all duration-300 hover:bg-white/10 hover:text-brand-gold hover:-translate-y-0.5" (click)="menuAbierto = false">
         <span class="text-lg">✏️</span>
         <span>Perfil</span>
       </a>
 
-      <a (click)="logout()" class="flex items-center gap-2 px-4 py-2 text-white no-underline rounded-lg font-semibold transition-all duration-300 bg-black/20 hover:bg-black/40 hover:-translate-y-0.5 cursor-pointer">
+      <a (click)="logout()" class="flex items-center gap-2 px-4 py-2 text-white no-underline rounded-lg font-semibold transition-all duration-300 bg-brand-red hover:bg-red-900 hover:-translate-y-0.5 cursor-pointer border border-brand-red">
         <span class="text-lg">🚪</span>
         <span>Salir</span>
       </a>
@@ -48,12 +52,16 @@
   </nav>
 
   <!-- Contenido principal -->
-  <main class="flex-1 w-full p-4 md:p-8 max-w-7xl mx-auto">
-    <router-outlet />
+    <!-- Main Content -->
+  <main class="flex-1 p-6 max-w-7xl mx-auto w-full animate-fade-in">
+    <router-outlet></router-outlet>
   </main>
 
   <!-- Footer -->
-  <footer class="bg-slate-800 text-white text-center p-6 mt-auto" *ngIf="authService.currentUser$ | async">
-    <p>© 2024 Casa Qian - Hotpot Restaurant | Sistema CRM</p>
+  <footer class="bg-brand-blue text-white text-center py-6 mt-auto border-t-4 border-brand-gold">
+    <p class="m-0 text-sm opacity-80">&copy; 2024 Casa Qian Hotpot. Todos los derechos reservados.</p>
   </footer>
+
+  <!-- Chatbot IA -->
+  <app-chatbot *ngIf="authService.currentUser$ | async"></app-chatbot>
 </div>

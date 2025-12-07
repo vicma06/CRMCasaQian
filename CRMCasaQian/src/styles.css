@@ -10,33 +10,38 @@
 }
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Playfair Display', serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: #f5f7fa;
 }
 
-html, body {
-  height: 100%;
-  margin: 0;
+h1, h2, h3, .font-display {
+  font-family: 'Cinzel', serif;
 }
 
-/* Scrollbar personalizada */
+html, body {
+  height: 100%;
+}
+
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 10px;
+  height: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: #f8fafc; /* brand-light */
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #c41e3a;
+  background: #d4af37; /* brand-gold */
   border-radius: 5px;
+  border: 2px solid #f8fafc; /* brand-light */
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #a01628;
+  background: #b5952f; /* Darker gold */
 }
 
 /* Animaciones */
@@ -66,4 +71,17 @@ html, body {
 .mb-1 { margin-bottom: 0.5rem; }
 .mb-2 { margin-bottom: 1rem; }
 .mb-3 { margin-bottom: 1.5rem; }
+
+/* Global Button Styles Override (Optional but helpful for consistency) */
+.btn-primary {
+  @apply bg-brand-red text-white font-bold py-2 px-4 rounded hover:bg-red-900 transition duration-300 shadow-md;
+}
+
+.btn-secondary {
+  @apply bg-brand-blue text-white font-bold py-2 px-4 rounded hover:bg-slate-800 transition duration-300 shadow-md;
+}
+
+.btn-accent {
+  @apply bg-brand-gold text-brand-blue font-bold py-2 px-4 rounded hover:bg-[#b5952f] transition duration-300 shadow-md;
+}
 

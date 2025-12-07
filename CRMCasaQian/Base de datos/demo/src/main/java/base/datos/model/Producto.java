@@ -12,9 +12,9 @@ public class Producto {
     private String categoria;
     private Double precio;
     private String descripcion;
-    private boolean disponible;
+    private Boolean disponible;
     private String imagen;
-    private boolean picante;
+    private Boolean picante;
 
     public Long getId() {
         return id;
@@ -56,11 +56,11 @@ public class Producto {
         this.descripcion = descripcion;
     }
 
-    public boolean isDisponible() {
+    public Boolean getDisponible() {
         return disponible;
     }
 
-    public void setDisponible(boolean disponible) {
+    public void setDisponible(Boolean disponible) {
         this.disponible = disponible;
     }
 
@@ -72,11 +72,11 @@ public class Producto {
         this.imagen = imagen;
     }
 
-    public boolean isPicante() {
+    public Boolean getPicante() {
         return picante;
     }
 
-    public void setPicante(boolean picante) {
+    public void setPicante(Boolean picante) {
         this.picante = picante;
     }
 }

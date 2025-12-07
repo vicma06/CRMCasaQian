@@ -1,13 +1,13 @@
 <div class="form-container">
   <div class="form-header">
-    <h1>📅 Nueva Reserva</h1>
+    <h1>📅 {{ isEditMode ? 'Editar Reserva' : 'Nueva Reserva' }}</h1>
   </div>
 
   <form (ngSubmit)="guardarReserva()" class="reserva-form">
     <div class="form-section">
       <h2>Información de la Reserva</h2>
       
-      <div class="form-group">
+      <div class="form-group" *ngIf="isAdmin">
         <label for="cliente">Cliente *</label>
         <select 
           id="cliente" 

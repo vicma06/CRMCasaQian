@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Reserva } from '../../models/reserva.model';
 import { ReservaService } from '../../services/reserva.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-reservas',
@@ -16,17 +17,30 @@ export class ReservasComponent implements OnInit {
   todasReservas: Reserva[] = [];
   filtroEstado: string = 'todas';
 
-  constructor(private reservaService: ReservaService) {}
+  constructor(
+    private reservaService: ReservaService,
+    public authService: AuthService
+  ) {}
 
   ngOnInit() {
     this.cargarReservas();
   }
 
   cargarReservas() {
-    this.reservaService.getReservas().subscribe(reservas => {
-      this.todasReservas = reservas;
-      this.aplicarFiltro();
-    });
+    if (this.authService.isAdmin()) {
+      this.reservaService.getReservas().subscribe(reservas => {
+        this.todasReservas = reservas;
+        this.aplicarFiltro();
+      });
+    } else {
+      const currentUser = this.authService.currentUserValue;
+      if (currentUser && currentUser.cliente) {
+        this.reservaService.getReservasPorCliente(currentUser.cliente.id).subscribe(reservas => {
+          this.todasReservas = reservas;
+          this.aplicarFiltro();
+        });
+      }
+    }
   }
 
   aplicarFiltro() {

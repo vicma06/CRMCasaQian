@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Cliente } from '../../models/cliente.model';
 import { ClienteService } from '../../services/cliente.service';
 
@@ -25,20 +25,51 @@ export class ClienteFormComponent implements OnInit {
     notas: '',
     vip: false
   };
+  isEditMode = false;
+  clienteId: number | null = null;
 
   constructor(
     private clienteService: ClienteService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.route.params.subscribe(params => {
+      if (params['id']) {
+        this.isEditMode = true;
+        this.clienteId = +params['id'];
+        this.cargarCliente(this.clienteId);
+      }
+    });
+  }
+
+  cargarCliente(id: number) {
+    this.clienteService.getClienteById(id).subscribe({
+      next: (cliente) => {
+        this.cliente = cliente;
+      },
+      error: (err) => {
+        console.error('Error cargando cliente', err);
+        alert('Error al cargar los datos del cliente');
+        this.router.navigate(['/clientes']);
+      }
+    });
+  }
 
   guardarCliente() {
     if (this.validarFormulario()) {
-      this.clienteService.addCliente(this.cliente as Omit<Cliente, 'id'>).subscribe(() => {
-        alert('Cliente registrado exitosamente');
-        this.router.navigate(['/clientes']);
-      });
+      if (this.isEditMode && this.clienteId) {
+        this.clienteService.updateCliente(this.clienteId, this.cliente).subscribe(() => {
+          alert('Cliente actualizado exitosamente');
+          this.router.navigate(['/clientes']);
+        });
+      } else {
+        this.clienteService.addCliente(this.cliente as Omit<Cliente, 'id'>).subscribe(() => {
+          alert('Cliente registrado exitosamente');
+          this.router.navigate(['/clientes']);
+        });
+      }
     }
   }
 
