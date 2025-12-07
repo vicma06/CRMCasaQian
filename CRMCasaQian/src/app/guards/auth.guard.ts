@@ -21,7 +21,5 @@ export const adminGuard: CanActivateFn = (route, state) => {
     return true;
   }
 
-  // If logged in but not admin, maybe redirect to dashboard or show unauthorized
-  // For now, just redirect to dashboard which will show limited view
   return router.createUrlTree(['/dashboard']);
 };

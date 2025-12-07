@@ -27,7 +27,7 @@ export const routes: Routes = [
       { path: 'clientes', component: ClientesComponent, canActivate: [adminGuard] },
       { path: 'clientes/nuevo', component: ClienteFormComponent, canActivate: [adminGuard] },
       
-      // Shared routes (but maybe with different permissions inside)
+      // Shared routes
       { path: 'reservas', component: ReservasComponent },
       { path: 'reservas/nueva', component: ReservaFormComponent },
       { path: 'productos', component: ProductosComponent },

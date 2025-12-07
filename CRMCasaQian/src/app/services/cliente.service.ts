@@ -36,12 +36,6 @@ export class ClienteService {
   }
 
   getClientesVIP(): Observable<Cliente[]> {
-    // This endpoint might need to be implemented in backend or filtered here
-    // For now, let's filter in frontend or assume backend has an endpoint
-    // Let's just get all and filter for now to match previous behavior if backend doesn't support it directly
-    // But better to use query param if possible. I'll stick to getAll for now and filter in component if needed, 
-    // or add a specific endpoint.
-    // Let's assume we filter in the component for simplicity or add a query param.
     return this.http.get<Cliente[]>(this.apiUrl); 
   }
 }
