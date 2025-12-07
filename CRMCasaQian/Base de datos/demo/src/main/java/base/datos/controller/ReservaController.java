@@ -3,6 +3,7 @@ package base.datos.controller;
 import base.datos.model.Reserva;
 import base.datos.repository.ReservaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,20 +21,32 @@ public class ReservaController {
         return reservaRepository.findAll();
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Reserva> getReservaById(@PathVariable Long id) {
+        return reservaRepository.findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
     @PostMapping
     public Reserva createReserva(@RequestBody Reserva reserva) {
         return reservaRepository.save(reserva);
     }
     
     @PutMapping("/{id}")
-    public Reserva updateReserva(@PathVariable Long id, @RequestBody Reserva reservaDetails) {
-        Reserva reserva = reservaRepository.findById(id).orElse(null);
-        if (reserva != null) {
-            reserva.setEstado(reservaDetails.getEstado());
-            reserva.setMesaId(reservaDetails.getMesaId());
-            return reservaRepository.save(reserva);
-        }
-        return null;
+    public ResponseEntity<Reserva> updateReserva(@PathVariable Long id, @RequestBody Reserva reservaDetails) {
+        return reservaRepository.findById(id)
+                .map(reserva -> {
+                    reserva.setFecha(reservaDetails.getFecha());
+                    reserva.setHora(reservaDetails.getHora());
+                    reserva.setNumeroPersonas(reservaDetails.getNumeroPersonas());
+                    reserva.setNotas(reservaDetails.getNotas());
+                    reserva.setEstado(reservaDetails.getEstado());
+                    reserva.setMesaId(reservaDetails.getMesaId());
+                    // No actualizamos clienteId/nombreCliente normalmente
+                    return ResponseEntity.ok(reservaRepository.save(reserva));
+                })
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")

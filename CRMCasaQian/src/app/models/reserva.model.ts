@@ -2,7 +2,7 @@ export interface Reserva {
   id: number;
   clienteId: number;
   nombreCliente?: string;
-  fecha: Date;
+  fecha: string | Date;
   hora: string;
   numeroPersonas: number;
   mesaId?: number;

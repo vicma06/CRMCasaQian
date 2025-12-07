@@ -1,4 +1,27 @@
-# CRMCasaQian
+# CRMCasaQian 🏮
+
+Sistema de gestión y reservas para el restaurante Casa Qian, potenciado por Inteligencia Artificial.
+
+## 🤖 Funcionalidades de IA
+
+### Qian Bot (Chat de Texto)
+El asistente virtual principal del restaurante, integrado en la web.
+- **Tecnología:** Google Gemini 2.5 Flash.
+- **Capacidades:**
+  - Recomendación inteligente de platos basada en el menú actual.
+  - Gestión de reservas automatizada (fecha, hora, comensales).
+  - Información sobre alérgenos y disponibilidad de productos en tiempo real.
+  - Interfaz amigable con carrusel de productos recomendados.
+
+### HanQiAI (Interfaz de Voz) 🚧
+> **Estado:** 🛠️ *En Desarrollo / Experimental*
+- Nueva modalidad de interacción por voz nativa.
+- Diseñada para ofrecer una experiencia conversacional más fluida y natural sin necesidad de escribir.
+- Utiliza modelos experimentales de audio nativo para reducir la latencia y mejorar la comprensión.
+
+---
+
+## Angular Project Info
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.21.
 
