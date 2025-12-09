@@ -9,7 +9,7 @@ import { Producto } from '../models/producto.model';
 })
 export class GeminiService {
   // TODO: Reemplazar con tu API Key real o usar environment variables
-  private apiKey = 'AIzaSyCUiCLQmHP4MMjyVWsLYzmWckHeeetcO9g'; 
+  private apiKey = ''; 
   // Usamos el modelo estándar gemini-pro que suele dar menos problemas de 404
   private modelName = 'gemini-2.5-flash-preview-09-2025';
   private apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${this.modelName}:generateContent`;
